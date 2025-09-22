@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard - Azure Learning</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .success-banner {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+        .metric-title { font-size: 14px; color: #666; }
+        .metric-value { font-size: 24px; font-weight: bold; color: #333; }
+        .metric-change { font-size: 14px; color: #28a745; }
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .azure-info {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        h1 { color: #333; }
+        h2 { color: #555; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-banner">
+            🎉 SUCCESS! Your dashboard is running on Azure Static Web Apps in Denmark-close datacenter!
+        </div>
+        
+        <div class="header">
+            <h1>📈 Stock Dashboard - Azure Learning</h1>
+            <p>Running on Azure Static Web Apps from <strong>West Europe</strong> 🇪🇺</p>
+        </div>
+
+        <div class="metrics">
+            <div class="metric-card">
+                <div class="metric-title">AAPL Stock Price</div>
+                <div class="metric-value">$189.25</div>
+                <div class="metric-change">+2.3% (+$4.25)</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Volume Today</div>
+                <div class="metric-value">45.2M</div>
+                <div class="metric-change">+12% vs avg</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Market Status</div>
+                <div class="metric-value">🟢 OPEN</div>
+                <div class="metric-change">New York Time</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-title">Azure Region</div>
+                <div class="metric-value">🇳🇱 West EU</div>
+                <div class="metric-change">~300km from DK</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Stock Price Trend (Last 30 Days)</h2>
+            <canvas id="priceChart" width="400" height="200"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Volume Analysis</h2>
+            <canvas id="volumeChart" width="400" height="200"></canvas>
+        </div>
+
+        <div class="azure-info">
+            <h3>🎓 Azure Concepts You're Learning:</h3>
+            <ul>
+                <li>✅ <strong>Azure Static Web Apps</strong> - Serverless web hosting</li>
+                <li>✅ <strong>Global CDN</strong> - Fast content delivery</li>
+                <li>✅ <strong>European Data Centers</strong> - Low latency from Denmark</li>
+                <li>✅ <strong>Automatic HTTPS</strong> - Secure connections</li>
+                <li>📅 <strong>Next:</strong> Add Azure Functions for backend APIs</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Generate sample stock data
+        const dates = [];
+        const prices = [];
+        const volumes = [];
+        
+        for (let i = 30; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i);
+            dates.push(date.toLocaleDateString());
+            
+            // Generate realistic stock price movement
+            const basePrice = 185;
+            const variation = (Math.random() - 0.5) * 10;
+            prices.push(basePrice + variation + (i * 0.1));
+            
+            volumes.push(Math.floor(Math.random() * 20 + 30)); // 30-50M volume
+        }
+
+        // Price Chart
+        const priceCtx = document.getElementById('priceChart').getContext('2d');
+        new Chart(priceCtx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'AAPL Price ($)',
+                    data: prices,
+                    borderColor: '#007bff',
+                    backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: false }
+                }
+            }
+        });
+
+        // Volume Chart
+        const volumeCtx = document.getElementById('volumeChart').getContext('2d');
+        new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: dates.slice(-7), // Last 7 days
+                datasets: [{
+                    label: 'Volume (M)',
+                    data: volumes.slice(-7),
+                    backgroundColor: 'rgba(40, 167, 69, 0.8)',
+                    borderColor: '#28a745',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎉 Dashboard loaded successfully on Azure!');
+            
+            // Update time every second
+            function updateTime() {
+                const now = new Date();
+                document.querySelector('.header p').innerHTML = 
+                    `Running on Azure Static Web Apps from <strong>West Europe</strong> 🇪🇺<br>
+                     <small>Last updated: ${now.toLocaleString()}</small>`;
+            }
+            
+            setInterval(updateTime, 1000);
+        });
+    </script>
+</body>
+</html>
