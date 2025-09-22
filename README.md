@@ -21,4 +21,4 @@ After you make changes in your html file and commit to github, azure will automa
 2. Explore other services
 3. Deploy my stock-pipeline project on azure
 
-✌️🫰🖖
+## ✌️🫰🖖
