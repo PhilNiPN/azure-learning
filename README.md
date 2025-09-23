@@ -6,6 +6,8 @@ A simple, interactive stock market dashboard built with HTML, CSS, and JavaScrip
 
 Visit the dashboard: **https://ambitious-mud-04bdaf203.2.azurestaticapps.net/)**
 
+![snapshot of dashboard](file_name)
+
 ## How To Make It Yourself
 
 1. Open Azure Portal and sign in
