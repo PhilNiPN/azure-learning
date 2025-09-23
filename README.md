@@ -6,7 +6,7 @@ A simple, interactive stock market dashboard built with HTML, CSS, and JavaScrip
 
 Visit the dashboard: **https://ambitious-mud-04bdaf203.2.azurestaticapps.net/)**
 
-![snapshot of dashboard](file_name)
+![snapshot of dashboard](html-dashboard.png)
 
 ## How To Make It Yourself
 
